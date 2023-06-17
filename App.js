@@ -27,14 +27,16 @@ import {loadStripe} from '@stripe/stripe-js';
 // import store from "./store";
 import {useState, useEffect } from 'react';
 function App() {
-  const [stripeApikey, setStripeApikey] = useState("")
-  useEffect(() => {
-    // store.dispatch(loadUser())
-    async function getStripeApiKey() {
-      const { data } = axios.get("");
-      setStripeApikey(data.stripeApiKey)
-    }
-  })
+  // const [stripeApikey, setStripeApikey] = useState("")
+  // useEffect(() => {
+  //   // store.dispatch(loadUser())
+  //   async function getStripeApiKey() {
+  //     const { data } = axios.get("");
+  //     setStripeApikey(data.stripeApiKey)
+  //   }
+  // })
+  const Public_KEY="pk_test_51NDS5DSFdE2NkcKCZCP6JTmvzjOPMQGkFMGBUUNtyPXqwMiJoG8L3SmDa3uXAgdfDle8hV80WHAvPa1VUFlUtY5R00Wk5nyhEG";
+  const stripePromise=loadStripe(Public_KEY);
   return (
     <BrowserRouter>
       <div className="App">
@@ -57,7 +59,7 @@ function App() {
               <Route path="/cartitem" element={<Cartlayout />} />
               <Route path="/shipping" element={<Productroutes> <Shipping /></Productroutes>} />
               <Route path="/order/confirm" element={<Productroutes> <Orderconfirm /></Productroutes>} />
-              <Route path="/payment" element={<Productroutes> <Elements stripe={loadStripe(stripeApikey)}>
+              <Route path="/payment" element={<Productroutes> <Elements stripe={stripePromise}>
                 <Paymentpage /> </Elements> </Productroutes>} />
             </Routes>
 
