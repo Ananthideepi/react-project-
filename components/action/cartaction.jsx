@@ -1,4 +1,4 @@
-import { addcardRequest, addcardSuccess } from "../slices/cardslice"
+import { addcardRequest, addcardSuccess, } from "../slices/cardslice"
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "../../firebase/firebase_config";
 
@@ -18,7 +18,7 @@ export const addcarditem = (id, quantity) => async (dispatch) => {
             
 // ...........................................................................
         const carditem=result.filter((item)=>item.id === id);
-        console.log("carditem",carditem)
+        // console.log("carditem",carditem)
                 dispatch(addcardSuccess({
                 product:carditem[0].id,
                 name:carditem[0].name,

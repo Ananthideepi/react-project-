@@ -16,7 +16,7 @@ export const getProductaction = id=>async (dispatch) => {
             });
       
         const data_id=result.filter((item)=>item.id===id)
-        console.log("data_id", data_id)
+        // console.log("data_id", data_id)
         dispatch(productSuccess(data_id))
         // console.log("data", vart)
     });

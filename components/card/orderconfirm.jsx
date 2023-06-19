@@ -20,7 +20,7 @@ export default function Orderconfirm() {
     item_Price=Number(item_Price).toFixed(2);
 
     const procespayment=()=>{
-    const data={
+    const  data={
         item_Price,
         shippingprice,
         taxPrice,

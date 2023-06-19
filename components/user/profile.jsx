@@ -30,7 +30,7 @@ export default function Profile() {
                     <p>{moment(user[0].createdAt.toDate()).calendar()}</p>
 
 
-                    <Link to="" className="btn btn-danger btn-block mt-5">
+                    <Link to="/order" className="btn btn-danger btn-block mt-5">
                         My Orders
                     </Link>
                     <Link to="/profile/update/password" className="btn btn-primary btn-block mt-3">

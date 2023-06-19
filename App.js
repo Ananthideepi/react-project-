@@ -20,12 +20,16 @@ import Cartlayout from './components/card/cardlayout';
 import Shipping from './components/card/shipping';
 import Orderconfirm from './components/card/orderconfirm';
 import Paymentpage from './components/card/payment';
-import axios from 'axios';
+import OrderSuccess from './components/card/orderSuccess';
+// import axios from 'axios';
 import { Elements } from '@stripe/react-stripe-js';
 import {loadStripe} from '@stripe/stripe-js';
+import UserOrder from './components/Order/useerOrder';
+import OrderDetails from './components/Order/orderDetails';
 // import { Card } from 'react-bootstrap';
 // import store from "./store";
-import {useState, useEffect } from 'react';
+// import {useState, useEffect } from 'react';
+
 function App() {
   // const [stripeApikey, setStripeApikey] = useState("")
   // useEffect(() => {
@@ -61,6 +65,10 @@ function App() {
               <Route path="/order/confirm" element={<Productroutes> <Orderconfirm /></Productroutes>} />
               <Route path="/payment" element={<Productroutes> <Elements stripe={stripePromise}>
                 <Paymentpage /> </Elements> </Productroutes>} />
+                <Route path="/order/success" element={<Productroutes> <OrderSuccess/></Productroutes>} />
+                <Route path="/order" element={<Productroutes> <UserOrder/></Productroutes>} />
+                <Route path="/order/:id" element={<Productroutes> <OrderDetails/></Productroutes>} />
+
             </Routes>
 
 

@@ -15,10 +15,12 @@ const orderSlice=createSlice({
             }
         },
         createOrderSuccess(state,action){
+            // console.log("action.pjg",action.payload[0].items)
             return{
                ...state,
                loading:false,
-               orderDetails:action.payload 
+               orderDetails:action.payload ,
+            //    userOrders:action.payload[0].items
             }
         },
         createOrderFailure(state,action){
@@ -27,10 +29,64 @@ const orderSlice=createSlice({
                 loading:false,
                 error:action.payload
             }
-        }
+        },clearError(state,action){
+            return{
+                ...state,
+                error:null
+            }
+        },
+        UserOrderRequest(state,action){
+            return{
+                ...state,
+                loading:false
+            }
+        },
+       UserOrderSuccess(state,action){
+        // console.log("action.payload",action.payload)
+            return{
+               ...state,
+               loading:false,
+               userOrders:action.payload,
+            }
+        },
+      UserOrderFailure(state,action){
+            return{
+                ...state,
+                loading:false,
+                error:action.payload
+            }
+        },
+      OrderDetailsRequest(state,action){
+            return{
+                ...state,
+                loading:false
+            }
+        },
+        OrderDetailsSuccess(state,action){
+        // console.log("action.payload",action.payload)
+            return{
+               ...state,
+               loading:false,
+               orderDetails:action.payload,
+            }
+        },
+        OrderDetailsFailure(state,action){
+            return{
+                ...state,
+                loading:false,
+                error:action.payload
+            }
+        },
+
+
+
+
     }
 })
 
 
-export const { createOrderRequest, createOrderSuccess,  createOrderFailure } = orderSlice.actions
+export const { createOrderRequest, createOrderSuccess, clearError,
+     createOrderFailure,
+     UserOrderSuccess,UserOrderRequest, UserOrderFailure,
+     OrderDetailsFailure,OrderDetailsSuccess,  OrderDetailsRequest } = orderSlice.actions
 export default orderSlice.reducer;

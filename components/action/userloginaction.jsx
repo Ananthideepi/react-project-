@@ -61,7 +61,7 @@ export const registeruser = (userData, id) => async (dispatch) => {
         const docSnap = await getDoc(docRef);
         const result = []
         const userData_info = docSnap.data();
-        // console.log("Document data:", docSnap.data());
+          // console.log("Document data:", docSnap.data());
         userData_info.id = docRef.id;
         result.push(userData_info)
         dispatch(registerSuccess(result, config));
