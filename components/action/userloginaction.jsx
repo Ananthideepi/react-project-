@@ -156,15 +156,26 @@ export const passwordupdateUser = (userData, id) => async (dispatch) => {
         const result = [];
         querySnapshot.forEach((doc) => {
             //   console.log(doc.id, " => ", doc.data());
-            console.log(doc.id, " => ", doc.data().password);
+            // console.log(doc.id, " => ", doc.data().password);
             result.push({ ...doc.data() })
         });
         result[0].password = userData.password;
         // console.log("resullt after",result)
         const collectionRef = doc(db, "userAuthentication", id)
         const docRef = await updateDoc(collectionRef, result[0])
-        dispatch(updatepasswordSuccess(docRef));
-        // console.log("userlogindata",userlogindata)
+            
+              const getupdate_data = await getDoc(collectionRef);
+              const updatepasswordDetails = [];
+      
+              if (getupdate_data.exists()) {
+                  // console.log("getupdate_data:", getupdate_data.data());
+                  updatepasswordDetails.push(getupdate_data.data())
+              } else {
+                  console.log("No such document!");
+              }
+              new Promise((resolve) => setTimeout(resolve, 1000))
+        dispatch(updatepasswordSuccess(updatepasswordDetails));
+    // console.log("updatepasswordDetails",updatepasswordDetails)
         // console.log("user", userlogindata)
     } 
     catch (error) {

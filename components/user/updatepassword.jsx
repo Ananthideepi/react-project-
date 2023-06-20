@@ -2,11 +2,14 @@ import React, { useEffect, useState } from 'react'
 import { useSelector,   useDispatch  } from 'react-redux';
 import { passwordupdateUser } from '../action/userloginaction';
 import { toast } from "react-toastify";
+import { useNavigate } from 'react-router-dom';
+import Loader from '../layout/loader';
 export default function Updatepassword() {
     const [password, setPassword] = useState("");
     const [oldpassword, setOldPassword] = useState("");
-    const {user, error,isupdated} = useSelector((state) => state.authReducerState)
-  console.log("updateuser",user[0].id)
+    const {user, error,isupdated} = useSelector((state) => state.authReducerState);
+    const navigate = useNavigate();
+//   console.log("updateuser",user[0].id)
     const dispatch=useDispatch()
     const submithandler = (e) => {
         e.preventDefault();
@@ -27,6 +30,7 @@ export default function Updatepassword() {
                 })
                 setOldPassword("");
                 setPassword("");
+                navigate('/profile')
                 return;
         } 
         if (error) {
@@ -37,10 +41,10 @@ export default function Updatepassword() {
                 })
                 return;
         } 
-    }, [isupdated,error,dispatch])
+    }, [isupdated,error,navigate,dispatch])
     return (
         <div>
-            <div className="row wrapper">
+            {user?(   <div className="row wrapper">
                 <div className="col-10 col-lg-5">
                     <form className="shadow-lg" onSubmit={submithandler}>
                         <h1 className="mt-2 mb-5">Update Password</h1>
@@ -69,7 +73,10 @@ export default function Updatepassword() {
                         <button type="submit" className="btn update-btn btn-block mt-4 mb-3">Update Password</button>
                     </form>
                 </div>
-            </div>
+            </div>):(
+                <Loader/>
+            )}
+          
         </div>
     )
 }

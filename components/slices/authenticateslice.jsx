@@ -73,8 +73,9 @@ const authSlice = createSlice({
     // .........................................load user .....for network token(localstorage token)...........................................
     loaduserRequest(state, action) {
       return {
-        loading: true,
         ...state,
+        loading: true,
+     
         // .....or........
         isAuthenticate: false
       }
@@ -116,8 +117,10 @@ const authSlice = createSlice({
     // ..............................update user details.................................  registerRequest(state, action) {
     updateprofileRequest(state, action) {
       return {
+          ...state,
         loading: true,
-        // ...state,
+      
+   
         // .....or........
         isAuthenticate: true,
         isupdated: false,
@@ -128,8 +131,9 @@ const authSlice = createSlice({
       // console.log("action.payload", {...action.payload});
       return {
         //  console.log("action.payload", {...action.payload});
-        loading: false,
         ...state,
+        loading: false,
+       
         user: action.payload,
         isupdated: true,
 
@@ -137,8 +141,9 @@ const authSlice = createSlice({
     },
     updateprofileFail(state, action) {
       return {
-        loading: false,
         ...state,
+        loading: false,
+      
         error: action.payload
       }
     },
@@ -153,6 +158,12 @@ const authSlice = createSlice({
     updatepasswordRequest(state, action) {
       return {
         ...state,
+        isAuthenticate: false,
+        islogin: false,
+      
+
+
+      
         loading: true,
         // .....or........
         // isAuthenticate: false,
@@ -160,7 +171,7 @@ const authSlice = createSlice({
       }
     },
     updatepasswordSuccess(state, action) {
-      // console.log("action.payload", {...action.payload});
+      console.log("action.payload", {...action.payload});
       return {
         //  console.log("action.payload", {...action.payload});
         ...state,

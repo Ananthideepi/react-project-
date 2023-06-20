@@ -6,9 +6,9 @@ import { db } from "../../firebase/firebase_config";
 
 export const createOrder = (order) => async (dispatch) => {
 
-    console.log("orderitem",order)
+    // console.log("orderitem",order)
     // console.log("order adddress",order.shippinginfo)
-    console.log("order.user",order.user)
+    // console.log("order.user",order.user)
     try {
         dispatch(createOrderRequest())
 
