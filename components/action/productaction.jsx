@@ -1,7 +1,7 @@
 // import axios from "axios";
 import {
     productFail, productRequest, productSuccess
-    , createReviewFail, createReviewSuccess, createReviewRequest
+    , createReviewFail, createReviewSuccess, createReviewRequest,newproductSuccess,newproductRequest,newproductFail,clearNewProductCreated
 } from "../slices/productslice";
 import { db } from "../../firebase/firebase_config";
 

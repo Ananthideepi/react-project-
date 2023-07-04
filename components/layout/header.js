@@ -48,6 +48,7 @@ export default function Header() {
 
               </Dropdown.Toggle>
               <Dropdown.Menu>
+          {user[0].role==="admin"  &&  <Dropdown.Item className="text-dark" onClick={() => { navigate("/dashboard") }}>Dashboard </Dropdown.Item>}
                 <Dropdown.Item className="text-dark" onClick={() => { navigate("/profile") }}>Profile </Dropdown.Item>
                 <Dropdown.Item className="text-dark" onClick={() => { navigate("/order") }}>Order </Dropdown.Item>
                 <Dropdown.Item className="text-danger" onClick={logoutHandler}>logout </Dropdown.Item>

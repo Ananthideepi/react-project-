@@ -1,7 +1,8 @@
 // import axios from "axios";
 import { collection, getDocs } from "firebase/firestore";
-import { productsFail, productsRequest, productsSuccess } from "../slices/productsSlice";
+import { productsFail, productsRequest, productsSuccess, AdminproductsRequest, AdminproductsSuccess, AdminproductsFail, } from "../slices/productsSlice";
 // import { data } from "./data";
+import { newproductSuccess, newproductRequest, newproductFail, clearNewProductCreated } from "../slices/productslice";
 import { db } from "../../firebase/firebase_config";
 
 export const getProductsaction = (keyword = null, price = null, category = null, rating = null, currentpage = null) => async (dispatch) => {
@@ -73,3 +74,47 @@ export const getProductsaction = (keyword = null, price = null, category = null,
 //     result.push(filter[filterpropery])
 //     return result;
 // }
+
+export const GetAdminproductAction = async (dispatch) => {
+    try {
+        dispatch(AdminproductsRequest())
+        const collectionRef = collection(db, "userAuthentication");
+        await getDocs(collectionRef).then((snapshot) => {
+            let result = []
+            // console.log("snapshot",snapshot)
+            snapshot.docs.forEach((item) => {
+                // console.log("item",item.data())
+                result.push({ ...item.data(), id: item.id })
+            });
+            console.log("result", result)
+            dispatch(AdminproductsSuccess(result))
+        })
+
+
+    } catch (error) {
+        dispatch(AdminproductsFail(error))
+    }
+}
+
+
+
+export const CreatenewProduct = productdata => async (dispatch) => {
+    try {
+        dispatch(newproductRequest())
+        const collectionRef = collection(db, "Products");
+        await getDocs(collectionRef).then((snapshot) => {
+            let result = []
+            // console.log("snapshot",snapshot)
+            snapshot.docs.forEach((item) => {
+                // console.log("item",item.data())
+                result.push({ ...item.data(), id: item.id })
+            });
+            console.log("result", result)
+            dispatch(newproductSuccess(result))
+        })
+
+
+    } catch (error) {
+        dispatch(newproductFail(error))
+    }
+}

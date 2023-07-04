@@ -26,6 +26,9 @@ import { Elements } from '@stripe/react-stripe-js';
 import {loadStripe} from '@stripe/stripe-js';
 import UserOrder from './components/Order/useerOrder';
 import OrderDetails from './components/Order/orderDetails';
+import Dashboard from './components/admin/dashboard';
+import Productlist from './components/admin/productlist';
+import Newproduct from './components/admin/newproduct';
 // import { Card } from 'react-bootstrap';
 // import store from "./store";
 // import {useState, useEffect } from 'react';
@@ -74,6 +77,11 @@ function App() {
 
           </HelmetProvider>
         </div>
+        <Routes>
+        <Route path="/dashboard" element={<Productroutes isAdmin={true}> <Dashboard /></Productroutes>} />
+        <Route path="/admin/products" element={<Productroutes isAdmin={true}> <Productlist/></Productroutes>} />
+        <Route path="/admin/products/create" element={<Productroutes isAdmin={true}> <Newproduct/></Productroutes>} />
+        </Routes>
         <Footer />
       </div>
     </BrowserRouter>
