@@ -18,30 +18,33 @@ export const getProductsaction = (keyword = null, price = null, category = null,
                 result.push({ ...item.data(), id: item.id })
             });
             // .......................................................................
-
-            if (keyword) {
-                // console.log("keyword", keyword)
-                result = result.filter(item => item.name.toLocaleLowerCase().includes(keyword.toLocaleLowerCase()));
-                new Promise((resolve) => setTimeout(resolve, 1000))
-            }
-
             if (price) {
-                // console.log("Startprice", price) 
-                result = result.filter(item => item.price >= price[0] && item.price <= price[1]);
-                new Promise((resolve) => setTimeout(resolve, 1000))
-                // const vart = await dispatch(productsSuccess(data))
+                let defaultprice = [1, 10000]
+                if (price[0] === defaultprice[0] && price[1] === defaultprice[1]) {
+                    if (keyword) {
+                        if (category) {
+                            console.log("category", category)
+                            result = result.filter(item => item.category.toLocaleLowerCase().includes(category.toLocaleLowerCase()));
+                            new Promise((resolve) => setTimeout(resolve, 1000))
+                        }
+                        else {
+                            console.log("keyword", keyword)
+                            result = result.filter(item => item.name.toLocaleLowerCase().includes(keyword.toLocaleLowerCase()));
+                            new Promise((resolve) => setTimeout(resolve, 1000))
+                       
+                        }
+                    }
+                }
+                else {
+                    console.log("Startprice", price)
+                    result = result.filter(item => item.price >= price[0] && item.price <= price[1]);
+                    new Promise((resolve) => setTimeout(resolve, 1000))
+                }
             }
 
-            if (category) {
-                // console.log("working")
-                result = result.filter(item => item.category.toLocaleLowerCase().includes(category.toLocaleLowerCase()));
-                // console.log("category",result)
-                new Promise((resolve) => setTimeout(resolve, 1000))
-            }
             if (rating) {
                 console.log("rating", rating)
                 result = result.filter(item => item.ratings.includes(rating))
-                console.log("rating", result)
                 new Promise((resolve) => setTimeout(resolve, 1000))
             }
 
