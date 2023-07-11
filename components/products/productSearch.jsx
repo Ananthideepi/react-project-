@@ -11,6 +11,7 @@ import Slider from 'rc-slider';
 import 'rc-slider/assets/index.css';
 import Tooltip from "rc-tooltip";
 import 'rc-tooltip/assets/bootstrap.css'
+import { clearProductError } from '../slices/productsSlice';
 
 export default function ProductSearch() {
     const Categories = ['Electronics',
@@ -39,14 +40,19 @@ export default function ProductSearch() {
         setCurrentpage(pageno)
     }
     useEffect(() => {
+
         if (error) {
             return toast.error(error, {
                 position: toast.POSITION.BOTTOM_CENTER
             })
         }
-     dispatch(getProductsaction(keyword, pricechange, category, rating, currentpage))
 
-    }, [error, dispatch, currentpage, keyword, pricechange,category, rating])
+        dispatch(getProductsaction(keyword, pricechange, category, rating, currentpage))
+        return () => {
+           dispatch( clearProductError())
+        }
+
+    }, [error, dispatch, currentpage, keyword, pricechange, category, rating])
     //   console.log("total.length",products?.length)
     //   console.log("currentpage",currentpage)
 
@@ -68,7 +74,7 @@ export default function ProductSearch() {
                                     <Slider
                                         range={true}
                                         marks={{
-                                            1: "$1",  
+                                            1: "$1",
                                             10000: "$10000"
                                         }
                                         }

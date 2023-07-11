@@ -8,7 +8,7 @@ import { db } from "../../firebase/firebase_config";
 import {  getDoc, collection, doc,  getDocs, updateDoc } from "firebase/firestore";
 // import { query, where, } from "firebase/firestore";
 export const getProductaction = (id) => async (dispatch) => {
-    // console.log("product id",id)
+    console.log("product id",id)
     try {
         dispatch(productRequest())
         const collectionRef = collection(db, "Products");

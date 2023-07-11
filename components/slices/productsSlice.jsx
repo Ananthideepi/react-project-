@@ -2,7 +2,10 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialstate = {
   loading: false,
-  // products:[]
+  products: [],
+  isProductDeleted: false,
+  isProductUpdated:false,
+  isProductCreated:false,
 }
 const productsSlice = createSlice({
   name: "products",
@@ -20,10 +23,17 @@ const productsSlice = createSlice({
         products: action.payload
       }
     },
+
     productsFail(state, action) {
       return {
         loading: false,
         error: action.payload
+      }
+    },
+    clearProductError(state, action) {
+      return {
+        ...state,
+
       }
     },
     setcount: (state, action) => {
@@ -36,14 +46,14 @@ const productsSlice = createSlice({
         loading: true,
       }
     },
-   AdminproductsSuccess(state, action) {
+    AdminproductsSuccess(state, action) {
       // console.log("action.payload", {...action.payload})
       return {
         loading: false,
         products: action.payload
       }
     },
-   AdminproductsFail(state, action) {
+    AdminproductsFail(state, action) {
       return {
         loading: false,
         error: action.payload
@@ -51,12 +61,100 @@ const productsSlice = createSlice({
     },
     ClearerrorAdminproduct(state, action) {
       return {
-       ...state,
+        ...state,
         error: null
+      }
+    },
+    newproductRequest(state, action) {
+      return {
+        ...state,
+        loading: true,
+      }
+    },
+    newproductSuccess(state, action) {
+      // console.log("action.payload", { ...action.payload })
+      return {
+        ...state,
+        loading: false,
+        products: action.payload,
+        isProductCreated: true
+      }
+    },
+    newproductFail(state, action) {
+      return {
+        ...state,
+        loading: false,
+        error: action.payload,
+        isProductCreated: false
+      }
+    }, clearNewProductCreated(state, action) {
+      return {
+        ...state,
+        isProductCreated: false
+      }
+    },
+    deleteproductRequest(state, action) {
+      return {
+        ...state,
+        loading: true,
+      }
+    },
+    deleteproductSuccess(state, action) {
+      return {
+        ...state,
+        loading: false,
+        products: action.payload,
+        isProductDeleted: true,
+      }
+    },
+    deleteproductFail(state, action) {
+      return {
+        ...state,
+        loading: false,
+        error: action.payload,
+        isProductDeleted: false
+      }
+    }, clearProductdeleted(state, action) {
+      return {
+        ...state,
+        isProductDeleted: false
+      }
+    },
+    updateproductRequest(state, action) {
+      return {
+        ...state,
+        loading: true,
+        isProductUpdated: false
+      }
+    },
+  updateproductSuccess(state, action) {
+   
+      return {
+        ...state,
+        loading: false,
+        products: action.payload,
+        isProductUpdated: true
+      }
+    },
+    updateproductFail(state, action) {
+      return {
+        ...state,
+        loading: false,
+        error: action.payload,
+     
+      }
+    }, clearupdateProduct(state, action) {
+      return {
+        ...state,
+        isProductUpdated: false
       }
     },
   }
 })
 
-export const { productsRequest, productsSuccess, productsFail, setcount, AdminproductsRequest,ClearerrorAdminproduct,   AdminproductsSuccess,  AdminproductsFail } = productsSlice.actions
+export const { productsRequest, productsSuccess, productsFail, setcount,
+  clearProductError, AdminproductsRequest, clearProductdeleted, deleteproductRequest, deleteproductSuccess,
+  newproductSuccess, newproductRequest, newproductFail, clearNewProductCreated,
+  deleteproductFail, ClearerrorAdminproduct, AdminproductsSuccess, AdminproductsFail,
+  updateproductFail,updateproductRequest,updateproductSuccess,clearupdateProduct } = productsSlice.actions
 export default productsSlice.reducer;

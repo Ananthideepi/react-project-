@@ -4,7 +4,7 @@ import { NavDropdown } from "react-bootstrap"
 export default function Sidebar() {
     const navigate = useNavigate();
     return (
-        <div>
+        <div style={{height:"100%"}}>
       
        
             <div className="sidebar-wrapper">
