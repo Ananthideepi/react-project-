@@ -24,14 +24,18 @@ export default function Productdetails() {
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
     const { product =[], isreviewSubmitted, error, } = useSelector((state) => state.productReducerState);
-    const { isAuthenticate } = useSelector((state) => state.authReducerState);
-    console.log("product", product)
+    const { isAuthenticate ,user=[]} = useSelector((state) => state.authReducerState);
+    // console.log("product", product)
     const [rating, setRating] = useState(1);
     const [comment, setComment] = useState("");
+    let  name="";
+    if(isAuthenticate){
+        name=user[0].name;
+     }
     // const [loading, setLoading] = useState(true)
     const [loading, setLoading] = useState(true)
     useEffect(() => {
-
+      
         if (isreviewSubmitted) {
             handleClose();
             toast("Review submitted successfully",
@@ -87,7 +91,7 @@ export default function Productdetails() {
         // formdata.append("rating", rating);
         // formdata.append("commend", comment);
         // formdata.append("productId", id)
-        dispatch(createReviewAction({ rating, comment, id }))
+        dispatch(createReviewAction({ rating, comment, id ,name}))
         handleClose();
     }
     return (
@@ -134,7 +138,16 @@ export default function Productdetails() {
                                 <span className="btn btn-primary plus" onClick={increaseQuantity}>+</span>
                             </div>
                             <button type="button" id="cart_btn" className="btn btn-primary d-inline ml-4"
-                                onClick={() => dispatch(addcarditem(product[0]?.id, quantity))}
+                                onClick={() =>{ 
+                                    dispatch(addcarditem(product[0]?.id, quantity))
+                                    toast("Card Item Added!",
+                                    {
+                                        position: toast.POSITION.BOTTOM_CENTER,
+                                        type: "success",
+                                       
+                                    })
+                                }
+                                }
                                 disabled={product[0]?.stock === 0 ? true : false}>Add to Cart</button>
 
                             <hr />

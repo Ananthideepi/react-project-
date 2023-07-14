@@ -9,7 +9,7 @@ export default function UserOrder() {
     const { user } = useSelector(state => state.authReducerState)
     const { userOrders = []} = useSelector(state => state.orderReducerState)
     const [loading, setLoading] = useState(false)
-      console.log("userOrders",userOrders)
+    //   console.log("userOrders",userOrders)
     // const items_=userOrders.map((order)=> order.items,)
     // var merged_items = items_.reduce(function(prev, next) {
     //     return prev.concat(next);
@@ -63,7 +63,8 @@ export default function UserOrder() {
                         id: order.id,
                         Numberofitem: element.quantity,
                         amount: `$${order.totalPrice}`,
-                        status: "procesing",
+                        status:<p style={{color:order.status.toUpperCase().includes("DELIVERED")?"green":"red"}}>{order.status.charAt(0).toUpperCase() + order.status.slice(1)}</p> ,
+              
                         // status: element.orderStatus && element.orderStatus.includes("delivered")?
                         // (<p style={{color:"green"}}>{element.orderStatus }</p>): (<p style={{color:"red"}}>{element.orderStatus }</p>),
                         action: <Link to={`/order/${ order.id}`} className='btn btn-primary'>

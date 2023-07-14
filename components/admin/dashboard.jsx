@@ -3,13 +3,17 @@ import Sidebar from './sidebar'
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from "react-router-dom";
 import { GetAdminproductAction } from '../action/productsaction';
+import { GetUsersAction } from '../action/userloginaction';
+import { AdminorderLists } from '../action/orderacion';
 
 // import { AdminproductsSuccess } from '../slices/productsSlice';
 
 
 export default function Dashboard() {
     const { products = [], } = useSelector((state) => state.productsReducerState);
-    const {user=[]} = useSelector((state) => state.authReducerState);
+    const { user = [] } = useSelector((state) => state.authReducerState);
+    const{ Users=[]}=useSelector((state)=>state.adminUserReducerState)
+    const { AdminOrders = [] } = useSelector((state) => state.orderReducerState);
     const dispatch = useDispatch();
     let outofstock = 0;
     if (products.length > 0) {
@@ -22,9 +26,13 @@ export default function Dashboard() {
     }
 
     useEffect(() => {
-        // dispatch(GetAdminproductAction)
+        dispatch(GetAdminproductAction)
+        dispatch(GetUsersAction)
+        dispatch(AdminorderLists)
     }, [dispatch])
-
+    const stylebg = {
+        background: "#ff818c"
+    }
     return (
         <div>
 
@@ -37,7 +45,7 @@ export default function Dashboard() {
                     <h1 className="my-4">Dashboard</h1>
                     <div className="row pr-4">
                         <div className="col-xl-12 col-sm-12 mb-3">
-                            <div className="card text-white bg-primary o-hidden h-100">
+                            <div className="card text-white   o-hidden h-100" style={stylebg}>
                                 <div className="card-body">
                                     <div className="text-center card-font-size">Total Amount<br /> <b>$3425</b>
                                     </div>
@@ -48,7 +56,7 @@ export default function Dashboard() {
 
                     <div className="row pr-4">
                         <div className="col-xl-3 col-sm-6 mb-3">
-                            <div className="card text-white bg-success o-hidden h-100">
+                            <div className="card text-white  o-hidden h-100" style={{ backgroundColor: "#dc3545" }}>
                                 <div className="card-body">
                                     <div className="text-center card-font-size">Products<br /> <b>{products.length}</b></div>
                                 </div>
@@ -60,12 +68,12 @@ export default function Dashboard() {
                                 </Link>
                             </div>
                         </div>
-
+                        {/* ff818c */}
 
                         <div className="col-xl-3 col-sm-6 mb-3">
-                            <div className="card text-white bg-danger o-hidden h-100">
+                            <div className="card text-white  o-hidden h-100" style={{ backgroundColor: "#dc3545" }}>
                                 <div className="card-body">
-                                    <div className="text-center card-font-size">Orders<br /> <b>{outofstock}</b></div>
+                                    <div className="text-center card-font-size">Orders<br /> <b>{AdminOrders.length}</b></div>
                                 </div>
                                 <Link className="card-footer text-white clearfix small z-1" to="/admin/orders">
                                     <span className="float-left">View Details</span>
@@ -78,11 +86,11 @@ export default function Dashboard() {
 
 
                         <div className="col-xl-3 col-sm-6 mb-3">
-                            <div className="card text-white bg-info o-hidden h-100">
+                            <div className="card text-white  o-hidden h-100" style={{ backgroundColor: "#dc3545" }}>
                                 <div className="card-body">
-                                    <div className="text-center card-font-size">Users<br /> <b></b></div>
+                                    <div className="text-center card-font-size">Users<br /> <b>{Users.length}</b></div>
                                 </div>
-                                <Link className="card-footer text-white clearfix small z-1" href="/admin/users">
+                                <Link className="card-footer text-white clearfix small z-1" to="/admin/users">
                                     <span className="float-left">View Details</span>
                                     <span className="float-right">
                                         <i className="fa fa-angle-right"></i>
@@ -93,7 +101,7 @@ export default function Dashboard() {
 
 
                         <div className="col-xl-3 col-sm-6 mb-3">
-                            <div className="card text-white bg-warning o-hidden h-100">
+                            <div className="card text-white  o-hidden h-100" style={{ backgroundColor: "#dc3545" }}>
                                 <div className="card-body">
                                     <div className="text-center card-font-size">Out of Stock<br /> <b>{outofstock}</b></div>
                                 </div>

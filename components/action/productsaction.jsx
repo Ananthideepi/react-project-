@@ -1,10 +1,11 @@
 import { collection, getDocs } from "firebase/firestore";
 import {
     productsFail, productsRequest, productsSuccess, AdminproductsRequest,
-    AdminproductsSuccess, AdminproductsFail, clearProductdeleted,
+    AdminproductsSuccess, AdminproductsFail, 
     deleteproductRequest, deleteproductSuccess, deleteproductFail,
     newproductSuccess, newproductRequest, newproductFail,
-    updateproductFail, updateproductRequest, updateproductSuccess, clearupdateProduct
+    updateproductFail, updateproductRequest, updateproductSuccess,
+    reviewRequest, reviewSuccess, reviewFail, deletereviewRequest, deletereviewSuccess, deletereviewFail
 } from "../slices/productsSlice";
 import { db, storage } from "../../firebase/firebase_config";
 import { ref, getDownloadURL, uploadBytes } from "firebase/storage";
@@ -209,7 +210,7 @@ export const updateProductAction = (id, productdata) => async (dispatch) => {
         const docRef = await updateDoc(Update_product, {
             category: productdata.cattegory,
             description: productdata.description,
-            images:imageUrls,
+            images: imageUrls,
             name: productdata.name,
             price: productdata.price,
             seller: productdata.seller,
@@ -231,5 +232,23 @@ export const updateProductAction = (id, productdata) => async (dispatch) => {
     } catch (error) {
         console.log(error)
         dispatch(updateproductFail(error))
+    }
+}
+// ...................................................................................................................
+export const getReviewsAction =(id)=> async (dispatch) => {
+    try {
+        dispatch(reviewRequest())
+        dispatch(reviewSuccess())
+    } catch (error) {
+        dispatch(reviewFail())
+    }
+}
+// ........................................................................................................................
+export const DeleteReviewAction=(productid, id)=>async(dispatch)=>{
+    try {
+        dispatch(deletereviewRequest())
+        dispatch(deletereviewSuccess())
+    } catch (error) {
+        dispatch(deletereviewFail())
     }
 }

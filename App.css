@@ -28,13 +28,16 @@ body {
 
 nav {
   /* background-color: #232f3e; */
-  background-color:#9cb332;
+  /* background-color:#9cb332; */
+ background-color:#ff818c;
+   /* background-color:#71b5e5;  */
   padding: 1rem 1rem;
 }
 
 #search_btn {
   /* background-color: #febd69; */
   background-color: #f24747;
+  /* background-color:#476cf2; */
 }
 
 .input-group {
@@ -502,9 +505,10 @@ footer {
 #sidebar {
   min-width: 100%;
   max-width: 100%;
-  background: #232f3e;
+  background: #ff818c;
   color: #fff;
   transition: all 0.3s;
+  box-shadow: 2px 5px 5px #ff818c
 }
 #sidebar.active {
   margin-left: -250px;
@@ -516,7 +520,7 @@ footer {
 }
 #sidebar ul.components {
   padding: 5px 0px;
-  border-bottom: 1px solid #232f3e;
+  border-bottom: 1px solid #f24747
 }
 
 #sidebar ul li a {
@@ -541,7 +545,7 @@ footer {
 #sidebar ul li.active > a,
 a[aria-expanded='true'] {
   color: #fff;
-  background: #232f3e;
+  background:#ff818c;
 }
 a[data-toggle='collapse'] {
   position: relative;

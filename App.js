@@ -30,6 +30,11 @@ import Dashboard from './components/admin/dashboard';
 import Productlist from './components/admin/productlist';
 import Newproduct from './components/admin/newproduct';
 import UpdateProduct from './components/admin/updateProduct';
+import Orderlist from './components/admin/OrderList';
+import UpdateoOrder from './components/admin/updateOrder';
+import UserList from './components/admin/UserlList';
+import UpdateUser from './components/admin/UserUpdate';
+import ReviewList from './components/admin/reviewList';
 // import { Card } from 'react-bootstrap';
 // import store from "./store";
 // import {useState, useEffect } from 'react';
@@ -83,6 +88,11 @@ function App() {
         <Route path="/admin/products" element={<Productroutes isAdmin={true}> <Productlist/></Productroutes>} />
         <Route path="/admin/products/create" element={<Productroutes isAdmin={true}> <Newproduct/></Productroutes>} />
         <Route path="/admin/product/:id" element={<Productroutes isAdmin={true}> <UpdateProduct/></Productroutes>} />
+        <Route path="/admin/orders" element={<Productroutes isAdmin={true}> <Orderlist/></Productroutes>} />
+        <Route path="/admin/order/:id" element={<Productroutes isAdmin={true}> <UpdateoOrder/></Productroutes>} />
+        <Route path="/admin/users" element={<Productroutes isAdmin={true}> <UserList/></Productroutes>} />
+        <Route path="/admin/user/:id" element={<Productroutes isAdmin={true}> <UpdateUser/></Productroutes>} />
+        <Route path="/admin/reviews" element={<Productroutes isAdmin={true}> <ReviewList/></Productroutes>} />
         </Routes>
         <Footer />
       </div>

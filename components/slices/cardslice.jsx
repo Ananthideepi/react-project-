@@ -70,7 +70,7 @@ const cardSlice = createSlice({
                 }
         },
         ordercompleted(state,action){
-            localStorage.removeItem("shippinginfo");
+            // localStorage.removeItem("shippinginfo");
             localStorage.removeItem("cardItem");
             sessionStorage.removeItem("orderinfo")
             return{

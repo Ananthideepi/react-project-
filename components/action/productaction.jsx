@@ -33,7 +33,7 @@ export const getProductaction = (id) => async (dispatch) => {
 
 
 export const createReviewAction = (reviewData) => async (dispatch) => {
-    console.log("reviewData", reviewData)
+    // console.log("reviewData", reviewData)
     try {
         dispatch(createReviewRequest())
         //     const config={

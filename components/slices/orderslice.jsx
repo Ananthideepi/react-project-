@@ -1,9 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
 const initialstate = {
-    orderDetails: {},
+    orderDetails: [],
     userOrders: [],
-    loading: false,
     AdminOrders: [],
+    loading: false,
     IsOrderDeleted: false,
     IsOrderupdated: false,
 }
@@ -32,7 +32,8 @@ const orderSlice = createSlice({
                 loading: false,
                 error: action.payload
             }
-        }, clearError(state, action) {
+        },
+        clearError(state, action) {
             return {
                 ...state,
                 error: null
@@ -152,7 +153,7 @@ const orderSlice = createSlice({
         ClearOrderUpdated(state, action) {
             return {
                 ...state,
-                IsOrderupdate: false
+                IsOrderupdated: false
             }
         }
 

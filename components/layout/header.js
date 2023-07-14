@@ -38,7 +38,7 @@ export default function Header() {
             <Dropdown className="d-inline">
               <Dropdown.Toggle varient='default text-white pr-5' id="dropdown-basic "
                 style={{
-                  backgroundColor: "#9cb332", border: "none", outline: "none", width: "60%"
+                  backgroundColor: "rgb(255 129 140)", border: "none", outline: "none", width: "60%"
                 }}>
                 <figure className='avatar avatar-nav'>
                   <Image style=

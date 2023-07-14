@@ -1,7 +1,8 @@
 import React from 'react'
 
+
 export default function ProductReview({ reviews=[] }) {
-    // console.log("resss", reviews )
+  
     return (
         <div>
             <div class="reviews w-75">
@@ -13,7 +14,7 @@ export default function ProductReview({ reviews=[] }) {
                         <div class="rating-outer">
                             <div class="rating-inner" style={{width:`${item.rating/5*100}%`}}></div>
                         </div>
-                        <p class="review_user">by Tamizharasan</p>
+                        <p class="review_user">by Dira </p>
                         <p class="review_comment">{item.commend}</p>
 
                         <hr />

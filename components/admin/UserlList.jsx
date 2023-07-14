@@ -2,18 +2,19 @@ import React, { useEffect } from 'react'
 import { Button } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom';
-import { ClearerrorAdminproduct } from '../slices/productsSlice';
 import { toast } from 'react-toastify';
 import Loader from '../layout/loader';
 import Sidebar from './sidebar'
 import { MDBDataTable } from 'mdbreact'
-import { DeleteNewProduct, GetAdminproductAction } from '../action/productsaction';
-import { clearProductdeleted } from '../slices/productsSlice';
-export default function Productlist() {
-    const { loading = true, products = [], error,isProductDeleted, } = useSelector((state) => state.productsReducerState);
-    const { error:producterror } = useSelector((state) => state.productReducerState);
+import { clearError } from '../slices/orderslice';
+import { clearUserDelete } from '../slices/adminAccessUserslice';
+import { DeleteUserAction, GetUsersAction } from '../action/userloginaction';
+
+export default function UserList() {
+    const { loading = true,  Users: [], error, isuserDeleted } = useSelector((state) => state.adminUserReducerState);
     const dispatch = useDispatch();
-    const setProduct = () => {
+    const{ Users=[]}=useSelector((state)=>state.adminUserReducerState)
+    const setUsers = () => {
         const data = {
             columns: [
                 {
@@ -27,35 +28,35 @@ export default function Productlist() {
                     sort: "asc"
                 },
                 {
-                    label: "Price",
-                    field: "price",
+                    label: "Email",
+                    field: "email",
                     sort: "asc"
                 }, {
-                    label: "Stock",
-                    field: "stock",
+                    label: "Role",
+                    field: "role",
                     sort: "asc"
                 }, {
                     label: "Action",
-                    field: "Action",
+                    field: "action",
                     sort: "asc"
                 }
             ],
             rows: []
         }
 
-        products.forEach((item) => {
+        Users.forEach((item) => {
             data.rows.push({
                 id: item.id,
                 name: item.name,
-                price: `${item.price}`,
-                stock: item.stock,
-                Action: (
+                email: item.email,
+                role: item.role,
+                action: (
                     <><Button>
-                        <Link to={`/admin/product/${item.id}`} className='"btn btn-primary'>
+                        <Link to={`/admin/user/${item.id}`} className='"btn btn-primary'>
                             <i className='fa fa-pencil'></i>
                         </Link>
-                        </Button>
-                        <Button onClick={(e)=>deleteHandler(e,item.id)}className='btn btn-danger py-1 px-2 ml-2'>
+                    </Button>
+                        <Button onClick={(e) => deleteHandler(e, item.id)} className='btn btn-danger py-1 px-2 ml-2'>
                             <i className='fa fa-trash'></i>
                         </Button>
                     </>
@@ -67,34 +68,34 @@ export default function Productlist() {
 
     const deleteHandler = (e, id) => {
         e.target.disabled = true;
-        dispatch(DeleteNewProduct(id))
-     
+        dispatch(DeleteUserAction(id))
+
     }
     useEffect(() => {
-        if (isProductDeleted) {
-            toast("Product Deleted successfully",
-              {
-                position: toast.POSITION.BOTTOM_CENTER,
-                type: "success",
-                onOpen: () => {
-                  dispatch(clearProductdeleted());
-                }
-      
-              })
+        if (isuserDeleted) {
+            toast("User Deleted successfully",
+                {
+                    position: toast.POSITION.BOTTOM_CENTER,
+                    type: "success",
+                    onOpen: () => {
+                        dispatch(clearUserDelete());
+                    }
+
+                })
             return;
-          }
-        if (error ||producterror) {
-            toast("errorin productList showing " || "error in product Delete" , {
+        }
+        if (error) {
+            toast("Error in user Delete", {
                 position: toast.POSITION.BOTTOM_CENTER,
                 type: "error",
                 onOpen: () => {
-                    dispatch(ClearerrorAdminproduct())
+                    dispatch(clearError())
                 }
             })
             return
         }
-   dispatch(GetAdminproductAction)
-    }, [dispatch, error,isProductDeleted,producterror])
+        dispatch(GetUsersAction)
+    }, [dispatch, error, isuserDeleted])
     return (
         <div>
 
@@ -104,11 +105,11 @@ export default function Productlist() {
                     <Sidebar />
                 </div>
                 <div className='col-12 col-md-10'>
-                    <h1 className="my-4">ProductList</h1>
+                    <h1 className="my-4">Order List</h1>
                     <>
                         {loading ? <Loader /> :
 
-                            <MDBDataTable className='px-3' bordered striped hover data={setProduct()} />
+                            <MDBDataTable className='px-3' bordered striped hover data={setUsers()} />
 
                         }
                     </>

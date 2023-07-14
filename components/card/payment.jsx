@@ -39,12 +39,16 @@ export default function Paymentpage() {
         orderItem: items,
         shippinginfo,
         user,
+        status:"processing",
+        payment:"not Paid"
     }
+    // console.log("order,o",order)
     if (orderDta) {
         order.itemPrice = orderDta.item_Price
         order.shippingprice = orderDta.shippingprice
         order.taxPrice = orderDta.taxPrice
         order.totalPrice = orderDta.totalPrice
+        
     }
     useEffect(() => {
         shippingvalidation(shippinginfo, navigate);
