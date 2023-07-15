@@ -1,9 +1,5 @@
 import React, { Fragment } from 'react'
-import {
-    createReviewAction,
-
-    getProductaction
-} from '../action/productaction'
+import {createReviewAction,getProductaction} from '../action/productaction'
 import { useEffect, useState } from 'react'
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux"
@@ -23,19 +19,20 @@ export default function Productdetails() {
     const [show, setShow] = useState(false);
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
-    const { product =[], isreviewSubmitted, error, } = useSelector((state) => state.productReducerState);
-    const { isAuthenticate ,user=[]} = useSelector((state) => state.authReducerState);
-    // console.log("product", product)
+    const { product = [], isreviewSubmitted, error, } = useSelector((state) => state.productReducerState);
+    const { isAuthenticate, user = [] } = useSelector((state) => state.authReducerState);
+ 
     const [rating, setRating] = useState(1);
     const [comment, setComment] = useState("");
-    let  name="";
-    if(isAuthenticate){
-        name=user[0].name;
-     }
+    const [name, setName] = useState("")
     // const [loading, setLoading] = useState(true)
     const [loading, setLoading] = useState(true)
+    // console.log("name",name)
     useEffect(() => {
-      
+
+        if (isAuthenticate) {
+            setName(user[0].name)
+        }
         if (isreviewSubmitted) {
             handleClose();
             toast("Review submitted successfully",
@@ -47,7 +44,7 @@ export default function Productdetails() {
                     }
                 })
 
-          
+
         }
         if (error) {
             toast("Review submit Failed",
@@ -91,7 +88,7 @@ export default function Productdetails() {
         // formdata.append("rating", rating);
         // formdata.append("commend", comment);
         // formdata.append("productId", id)
-        dispatch(createReviewAction({ rating, comment, id ,name}))
+        dispatch(createReviewAction({ rating, comment, id, name }))
         handleClose();
     }
     return (
@@ -138,14 +135,14 @@ export default function Productdetails() {
                                 <span className="btn btn-primary plus" onClick={increaseQuantity}>+</span>
                             </div>
                             <button type="button" id="cart_btn" className="btn btn-primary d-inline ml-4"
-                                onClick={() =>{ 
+                                onClick={() => {
                                     dispatch(addcarditem(product[0]?.id, quantity))
                                     toast("Card Item Added!",
-                                    {
-                                        position: toast.POSITION.BOTTOM_CENTER,
-                                        type: "success",
-                                       
-                                    })
+                                        {
+                                            position: toast.POSITION.BOTTOM_CENTER,
+                                            type: "success",
+
+                                        })
                                 }
                                 }
                                 disabled={product[0]?.stock === 0 ? true : false}>Add to Cart</button>
@@ -210,8 +207,8 @@ export default function Productdetails() {
                         </div>
 
                     </div>
-                 
-                    {product.length >0 &&product[0].reviews && product[0].reviews.length > 0 ? <ProductReview reviews={product[0].reviews} /> : " "}
+
+                    {product.length > 0 && product[0].reviews && product[0].reviews.length > 0 ? <ProductReview reviews={product[0].reviews} /> : " "}
                 </div>
 
             }

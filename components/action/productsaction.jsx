@@ -1,12 +1,13 @@
 import { collection, getDocs } from "firebase/firestore";
 import {
     productsFail, productsRequest, productsSuccess, AdminproductsRequest,
-    AdminproductsSuccess, AdminproductsFail, 
+    AdminproductsSuccess, AdminproductsFail,
     deleteproductRequest, deleteproductSuccess, deleteproductFail,
     newproductSuccess, newproductRequest, newproductFail,
     updateproductFail, updateproductRequest, updateproductSuccess,
     reviewRequest, reviewSuccess, reviewFail, deletereviewRequest, deletereviewSuccess, deletereviewFail
 } from "../slices/productsSlice";
+import { query, where } from "firebase/firestore";
 import { db, storage } from "../../firebase/firebase_config";
 import { ref, getDownloadURL, uploadBytes } from "firebase/storage";
 import { v4 } from "uuid";
@@ -22,7 +23,7 @@ export const getProductsaction = (keyword = null, price = null, category = null,
                 let result = []
                 // console.log("snapshot",snapshot)
                 snapshot.docs.forEach((item) => {
-                    // console.log("item",item.data())
+                    // console.log("item", item.data())
                     result.push({ ...item.data(), id: item.id })
                 });
                 // .......................................................................
@@ -94,7 +95,7 @@ export const GetAdminproductAction = async (dispatch) => {
                 // console.log("item",item.data())
                 result.push({ ...item.data(), id: item.id })
             });
-            console.log("result", result)
+            // console.log("result", result)
             dispatch(AdminproductsSuccess(result))
         })
 
@@ -126,7 +127,7 @@ export const CreatenewProduct = productdata => async (dispatch) => {
         });
 
         await Promise.all(uploadPromises)
-        console.log("imageurl", imageUrls);
+        // console.log("imageurl", imageUrls);
         const collectionRef = collection(db, "Products");
         const docRef = await addDoc(collectionRef, {
             name: productdata.name,
@@ -139,7 +140,8 @@ export const CreatenewProduct = productdata => async (dispatch) => {
             numOfReview: empty,
             ratings: empty,
             reviews: [],
-            createdAt: serverTimestamp()
+            createdAt: serverTimestamp(),
+
         });
         const docSnap = await getDoc(docRef);
 
@@ -182,7 +184,7 @@ export const DeleteNewProduct = id => async (dispatch) => {
 }
 // ...............................................................................................................................
 export const updateProductAction = (id, productdata) => async (dispatch) => {
-    console.log("productadta", productdata)
+    // console.log("productadta", productdata)
     // console.log("pdid", id)
 
     try {
@@ -193,12 +195,12 @@ export const updateProductAction = (id, productdata) => async (dispatch) => {
             return uploadBytes(storageRef, item)
                 .then((snapshot) => getDownloadURL(snapshot.ref))
                 .then((image) => {
-                    console.log('Uploaded an url:', image);
+                    // console.log('Uploaded an url:', image);
                     const image_url = { image }
                     imageUrls.push(image_url);
                 })
                 .catch((error) => {
-                    console.error('Error uploading image:', error);
+                    // console.error('Error uploading image:', error);
                 });
         });
 
@@ -216,7 +218,7 @@ export const updateProductAction = (id, productdata) => async (dispatch) => {
             seller: productdata.seller,
             stock: productdata.stock,
         });
-        console.log("docref", docRef)
+        // console.log("docref", docRef)
         let result = []
         const collectionRef = collection(db, "Products");
         await getDocs(collectionRef).then(
@@ -235,19 +237,54 @@ export const updateProductAction = (id, productdata) => async (dispatch) => {
     }
 }
 // ...................................................................................................................
-export const getReviewsAction =(id)=> async (dispatch) => {
+export const getReviewsAction = (id) => async (dispatch) => {
+    // console.log("id", id)
     try {
         dispatch(reviewRequest())
-        dispatch(reviewSuccess())
+        const q = query(collection(db, "Products"), where("id", "==", id));
+        const result = []
+        const querySnapshot = await getDocs(q);
+        querySnapshot.forEach((doc) => {
+            // doc.data() is never undefined for query doc snapshots
+            result.push(doc.data());
+            // result.push(id)
+            // console.log("resulr",result)
+        });
+        if (result.length > 0) {
+            const data_id = result[0].reviews;
+            data_id.id = id
+            // console.log("dta",data_id)
+            dispatch(reviewSuccess(data_id,))
+        }
     } catch (error) {
         dispatch(reviewFail())
     }
 }
 // ........................................................................................................................
-export const DeleteReviewAction=(productid, id)=>async(dispatch)=>{
+export const DeleteReviewAction = (productid, id) => async (dispatch) => {
+    console.log("productIg", productid, id)
     try {
         dispatch(deletereviewRequest())
+        const q = query(collection(db, "Products"), where("id", "==", productid));
+        const result = []
+        const querySnapshot = await getDocs(q);
+        querySnapshot.forEach((doc) => {
+            result.push(doc.data().reviews);
+        });
+
+        const deleteresult = result[0].filter((item) => item.id !== id);
+        console.log("deleteresult", deleteresult);
+        const Update_product = doc(db, "Products", productid);
+        try {
+          await updateDoc(Update_product, { reviews: deleteresult });
+          console.log("updated successfully");
+        } catch (error) {
+          console.log("Error updating", error);
+        }
+      
+ 
         dispatch(deletereviewSuccess())
+
     } catch (error) {
         dispatch(deletereviewFail())
     }

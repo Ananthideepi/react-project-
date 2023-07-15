@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { Button } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom';
-import {  clearreviewdeleted } from '../slices/productsSlice';
+import { clearreviewdeleted } from '../slices/productsSlice';
 import { toast } from 'react-toastify';
 import Loader from '../layout/loader';
 import Sidebar from './sidebar'
@@ -13,6 +13,7 @@ import { clearError } from '../slices/productslice';
 export default function ReviewList() {
     const { loading = true, products = [], reviews = [], error, isReviewDeleted, } = useSelector((state) => state.productsReducerState);
     const { error: producterror } = useSelector((state) => state.productReducerState);
+    // console.log("reviews",reviews)
     const [productId, setProductId] = useState("");
     const dispatch = useDispatch();
     const setProduct = () => {
@@ -27,7 +28,7 @@ export default function ReviewList() {
                     label: 'Rating',
                     field: 'rating',
                     sort: 'asc'
-                },
+                }, 
                 {
                     label: 'User',
                     field: 'user',
@@ -48,18 +49,14 @@ export default function ReviewList() {
             rows: []
         }
 
-        reviews.forEach((item) => {
+    reviews.map((item) => {
             data.rows.push({
                 id: item.id,
-                name: item.name,
-                price: `${item.price}`,
-                stock: item.stock,
-                Action: (
-                    <><Button>
-                        <Link to={`/admin/reviews/${item.id}`} className='"btn btn-primary'>
-                            <i className='fa fa-pencil'></i>
-                        </Link>
-                    </Button>
+                user: item.submittedBy,
+                rating: item.rating,
+                comment: item.comment,
+                actions: (
+                    <>
                         <Button onClick={(e) => deleteHandler(e, item.id)} className='btn btn-danger py-1 px-2 ml-2'>
                             <i className='fa fa-trash'></i>
                         </Button>
@@ -72,9 +69,9 @@ export default function ReviewList() {
 
     const deleteHandler = (e, id) => {
         e.target.disabled = true;
-        dispatch(DeleteReviewAction( productId,id))
+        dispatch(DeleteReviewAction(productId, id))
     }
-    const submitHandler = (e) =>{
+    const submitHandler = (e) => {
         e.preventDefault();
         dispatch(getReviewsAction(productId))
     }
@@ -101,7 +98,7 @@ export default function ReviewList() {
             })
             return
         }
-        dispatch(getReviewsAction(productId))
+        // dispatch(getReviewsAction(productId))
     }, [dispatch, error, isReviewDeleted, producterror])
     return (
         <div>

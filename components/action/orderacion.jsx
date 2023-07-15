@@ -102,7 +102,7 @@ export const AdminorderLists = async (dispatch) => {
         const result = querySnapshot.docs.map((item) => {
             return { ...item.data(), id: item.id };
         });
-        console.log("resultadmin", result);
+        // console.log("resultadmin", result);
         dispatch(AdminOrderSuccess(result));
 
 

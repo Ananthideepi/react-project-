@@ -7,7 +7,8 @@ const initialstate = {
   isProductUpdated:false,
   isProductCreated:false,
   isreviewDeleted:false,
-  Review:[]
+  Review:[],
+  isgotProducts:false
 }
 const productsSlice = createSlice({
   name: "products",
@@ -22,7 +23,8 @@ const productsSlice = createSlice({
       // console.log("action.payload", {...action.payload})
       return {
         loading: false,
-        products: action.payload
+        products: action.payload,
+        isgotProducts:true
       }
     },
 

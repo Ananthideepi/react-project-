@@ -33,6 +33,25 @@ const productSlice = createSlice({
         error: action.payload
       }
     },
+    createReviewRequest(state, action) {
+      return {
+        ...state,
+        isreviewSubmitted:false,
+      }
+    },
+    createReviewSuccess(state, action) {
+      // console.log("action.payload", {...action.payload})
+      return {
+        ...state,
+        isreviewSubmitted: true
+      }
+    },
+    createReviewFail(state, action) {
+      return {
+        ...state,
+        error: action.payload,
+      }
+    },
    clearReviewsubmitted(state, action) {
       return {
         ...state,

@@ -9,7 +9,7 @@ import Pagination from "react-js-pagination"
 
 export default function Home() {
     const dispatch = useDispatch();
-    const { loading, products, error } = useSelector((state) => state.productsReducerState);
+    const { loading, products, error , isgotProducts} = useSelector((state) => state.productsReducerState);
     // console.log("home_products",products)
     const [currentpage, setCurrentpage] = useState(1);
 
@@ -37,7 +37,7 @@ export default function Home() {
                     <section id="products" className="container mt-5">
 
                         <div className="row">
-                            {products && products.map((item) =>(
+                            {isgotProducts && products && products.map((item) =>(
                             // console.log("item",item),
                                 <Homeproduct col={3} key={item.id} item={item} />)
                             )
